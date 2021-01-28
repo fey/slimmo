@@ -2,11 +2,26 @@
 
 namespace App\Entities;
 
+use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="users")
+ */
 class User implements JsonSerializable
 {
+    /**
+     * @var int
+     * @ORM\Id()
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue()
+     */
     private int $id;
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
     private string $name;
 
     public function __construct($id, $name)

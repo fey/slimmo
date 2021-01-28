@@ -3,3 +3,6 @@ start:
 
 install:
 	composer install
+
+migrate:
+	composer exec doctrine orm:schema-tool:update -- --dump-sql

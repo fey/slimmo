@@ -1,6 +1,7 @@
 <?php
 
 use DI\Container;
+use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
 
@@ -12,13 +13,21 @@ return [
     'doctrine.proxyDir' => null,
     'doctrine.cache' => null,
     'doctrine.useSimpleAnnotationReader' => false,
-    'doctrine.config' => fn(Container $c) => Setup::createAnnotationMetadataConfiguration(
-        $c->get('doctrine.annotationMetadataConfiguration'),
-        $c->get('doctrine.isDevMode'),
-        $c->get('doctrine.proxyDir'),
-        $c->get('doctrine.cache'),
-        $c->get('doctrine.useSimpleAnnotationReader')
-    ),
+    'doctrine.logger' => \DI\create(\Doctrine\DBAL\Logging\DebugStack::class),
+    'doctrine.config' => static function (Container $c): Configuration {
+        $logger = $c->get('doctrine.logger');
+        $config = Setup::createAnnotationMetadataConfiguration(
+            $c->get('doctrine.annotationMetadataConfiguration'),
+            $c->get('doctrine.isDevMode'),
+            $c->get('doctrine.proxyDir'),
+            $c->get('doctrine.cache'),
+            $c->get('doctrine.useSimpleAnnotationReader')
+        );
+
+        $config->setSQLLogger($logger);
+
+        return $config;
+    },
     'doctrine.connection' => [
         'driver' => 'pdo_sqlite',
         'path' => __DIR__ . '/../database/db.sqlite',
