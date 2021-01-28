@@ -33,7 +33,7 @@ class Rest
     {
         $this->app->get("/$resource", [$controllerName, 'index']);
         $this->app->get("/$resource/{id}", [$controllerName, 'show']);
-        $this->app->post("/$resource/", [$controllerName, 'store']);
+        $this->app->post("/$resource", [$controllerName, 'store']);
         $this->app->put("/$resource/{id}", [$controllerName, 'update']);
         $this->app->delete("/$resource/{id}", [$controllerName, 'destroy']);
     }

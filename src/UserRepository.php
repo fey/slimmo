@@ -7,29 +7,34 @@ use Doctrine\ORM\EntityManager;
 
 class UserRepository
 {
-    private array $users;
-    /**
-     * @var EntityManager
-     */
-    private ?EntityManager $entityManager = null;
+    private EntityManager $entityManager;
 
     public function __construct(EntityManager $entityManager)
     {
-
-        $range = range(1, 10);
-
-        $this->users = array_map(fn($id) => new User($id, "User $id"), $range);
-
         $this->entityManager = $entityManager;
     }
 
     public function findAll(): array
     {
-        return $this->users;
+        $repo = $this->entityManager->getRepository(User::class);
+
+        return $repo->findAll();
     }
 
     public function find($id): ?User
     {
-        return $this->users[$id - 1] ?? null;
+        $repo = $this->entityManager->getRepository(User::class);
+
+        return $repo->find($id);
+    }
+
+    public function create($name): User
+    {
+        $user = new User();
+        $user->setName($name);
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        return $user;
     }
 }

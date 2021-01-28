@@ -3,6 +3,7 @@
 namespace App;
 
 use DI\Annotation\Inject;
+use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 
 use function App\functions\withJson;
@@ -34,13 +35,19 @@ class UserController
         return withJson($response, $user);
     }
 
-    public function store(Response $response)
+    public function store(Request $request, Response $response)
     {
+        ['name' => $name] = $request->getParsedBody();
+
+        $this->userRepository->create($name);
         return $response->withStatus(201);
     }
 
-    public function update(Response $response)
+    public function update(Request $request, Response $response)
     {
+        $name = $request->getAttribute('name');
+
+        var_dump($name);
         return $response->withStatus(204);
     }
 

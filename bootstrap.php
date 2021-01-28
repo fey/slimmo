@@ -12,7 +12,7 @@ register_shutdown_function(static function () use ($container) {
         error_log(sprintf(
             'query: %s, params: [%s]',
             $current['sql'],
-            implode($current['params'])
+            implode((array)$current['params'])
         ), 4);
     }
 
