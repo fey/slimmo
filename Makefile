@@ -9,6 +9,6 @@ prepare-db:
 	composer exec doctrine orm:schema-tool:create
 
 migrate:
-	composer exec doctrine orm:schema-tool:update -- --dump-sql
+	composer exec doctrine orm:schema-tool:update -- --force
 
 migrate-fresh: prepare-db migrate

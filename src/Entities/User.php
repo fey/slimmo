@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 
@@ -23,6 +24,23 @@ class User implements JsonSerializable
      * @ORM\Column(type="string")
      */
     private string $name;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entities\Item")
+     * @ORM\JoinTable(name="inventories")
+     */
+    private $items;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entities\User\InventorySlot", mappedBy="User")
+     */
+    private $inventory;
+
+    public function __construct()
+    {
+        $this->inventory = new ArrayCollection();
+        $this->items = new ArrayCollection();
+    }
 
     /**
      * @return string

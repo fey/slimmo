@@ -31,10 +31,16 @@ class Rest
 
     public function resource(string $resource, string $controllerName)
     {
-        $this->app->get("/$resource", [$controllerName, 'index']);
-        $this->app->get("/$resource/{id}", [$controllerName, 'show']);
-        $this->app->post("/$resource", [$controllerName, 'store']);
-        $this->app->put("/$resource/{id}", [$controllerName, 'update']);
-        $this->app->delete("/$resource/{id}", [$controllerName, 'destroy']);
+        $resourcesPath = str_replace('.', '/', $resource);
+        $this->app->get("/$resourcesPath", [$controllerName, 'index'])
+            ->setName("$resource.index");
+        $this->app->get("/$resourcesPath/{id}", [$controllerName, 'show'])
+            ->setName("$resource.show");
+        $this->app->post("/$resourcesPath", [$controllerName, 'store'])
+            ->setName("$resource.store");
+        $this->app->put("/$resourcesPath/{id}", [$controllerName, 'update'])
+            ->setName("$resource.update");
+        $this->app->delete("/$resourcesPath/{id}", [$controllerName, 'destroy'])
+            ->setName("$resource.destroy");
     }
 }

@@ -14,9 +14,11 @@ $app->get('/hello/{name}', function (Response $response, $name, Request $request
 });
 
 
-$app->get('/', function (Request $request, Response $response) {
+$app->get('/', function (Request $request, Response $response) use ($app) {
     $response->getBody()->write("Hello world!");
     return $response;
 });
 
 $app->resource('users', \App\UserController::class);
+$app->resource('items', \App\ItemController::class);
+$app->resource('user.inventory',\App\User\InventoryController::class);

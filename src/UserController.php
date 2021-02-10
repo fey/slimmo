@@ -2,7 +2,6 @@
 
 namespace App;
 
-use DI\Annotation\Inject;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 
