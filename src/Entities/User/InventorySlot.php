@@ -24,7 +24,7 @@ class InventorySlot
     private User $user;
     /**
      * @var Item
-     * @ORM\ManyToOne(targetEntity="App\Entities\Item", inversedBy="inventorySlots")
+     * @ORM\ManyToOne(targetEntity="App\Entities\Item", fetch="EAGER")
      */
     private Item $item;
     /**
@@ -62,5 +62,8 @@ class InventorySlot
         $this->count = $count;
     }
 
-
+    public function add(int $count)
+    {
+        $this->count += $count;
+    }
 }

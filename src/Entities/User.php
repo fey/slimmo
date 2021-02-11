@@ -3,6 +3,7 @@
 namespace App\Entities;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 
@@ -32,7 +33,7 @@ class User implements JsonSerializable
     private $items;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entities\User\InventorySlot", mappedBy="User")
+     * @ORM\OneToMany(targetEntity="App\Entities\User\InventorySlot", mappedBy="user")
      */
     private $inventory;
 
@@ -81,5 +82,10 @@ class User implements JsonSerializable
             'id' => $this->getId(),
             'name' => $this->getName(),
         ];
+    }
+
+    public function getInventory(): Collection
+    {
+        return $this->inventory;
     }
 }

@@ -8,7 +8,8 @@
         "nataniel/bggxmlapi2": "^1.1",
         "doctrine/inflector": "^2.0",
         "ext-json": "*",
-        "swaggest/json-schema": "^0.12.31"
+        "swaggest/json-schema": "^0.12.31",
+        "fakerphp/faker": "^1.13"
     },
     "autoload": {
         "psr-4": {

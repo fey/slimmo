@@ -32,6 +32,12 @@ return [
         'driver' => 'pdo_sqlite',
         'path' => __DIR__ . '/../database/db.sqlite',
     ],
+    \App\UserRepository::class => \DI\factory([EntityManager::class, 'getRepository'])
+        ->parameter('entityName', \App\Entities\User::class),
+    \App\ItemRepository::class => \DI\factory([EntityManager::class, 'getRepository'])
+        ->parameter('entityName', \App\Entities\Item::class),
+    \App\InventoryRepository::class => \DI\factory([EntityManager::class, 'getRepository'])
+        ->parameter('entityName', \App\Entities\User\InventorySlot::class),
     EntityManager::class => DI\factory([EntityManager::class, 'create'])
         ->parameter('connection', get('doctrine.connection'))
         ->parameter('config', get('doctrine.config')),
